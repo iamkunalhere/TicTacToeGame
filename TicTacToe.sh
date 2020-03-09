@@ -16,7 +16,7 @@ function displayBoard() {
 	 done
 		echo "---------------"
 }
-displayBoard
+
 function assignLetter() {
  state=$((RANDOM%2))
 	if [[ $state -eq 1 ]]
@@ -28,7 +28,6 @@ function assignLetter() {
 }
 
 playerSign=$( assignLetter )
-
 
 function whoPlays() {
 state=$((RANDOM%2))
@@ -42,3 +41,4 @@ state=$((RANDOM%2))
 
 Turn=$( whoPlays )
 echo $Turn
+displayBoard
