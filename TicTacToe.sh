@@ -26,5 +26,19 @@ function assignLetter() {
 		echo "O"
 	fi
 }
-player=$( assignLetter )
-echo $player
+
+playerSign=$( assignLetter )
+
+
+function whoPlays() {
+state=$((RANDOM%2))
+   if [[ $state -eq 1 ]]
+    then
+      echo "PlayerFirst"
+    else
+      echo "ComputerFirst"
+   fi
+}
+
+Turn=$( whoPlays )
+echo $Turn
