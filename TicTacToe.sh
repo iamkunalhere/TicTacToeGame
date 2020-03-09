@@ -17,3 +17,14 @@ function displayBoard() {
 		echo "---------------"
 }
 displayBoard
+function assignLetter() {
+ state=$((RANDOM%2))
+	if [[ $state -eq 1 ]]
+	 then
+		echo "X"
+	 else
+		echo "O"
+	fi
+}
+player=$( assignLetter )
+echo $player
