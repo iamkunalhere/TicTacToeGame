@@ -46,9 +46,9 @@ function whoPlays() {
 state=$((RANDOM%2))
    if [[ $state -eq 1 ]]
     then
-      echo "PlayerFirst"
+      echo "Player"
     else
-      echo "ComputerFirst"
+      echo "Computer"
    fi
 }
 
@@ -107,7 +107,7 @@ function TicTacToeApp() {
    fi
 	if [[ $win == 1 ]]
 	 then
-		printf "$player has won"
+		printf "$playerSign has won"
 		displayBoard
 	   exit
 	fi
@@ -119,21 +119,52 @@ function TicTacToeApp() {
 	fi
 }
 
+function computerPlay() {
+	cPosition=$((RANDOM%9))
+	newRI=$(($cPosition / 3))
+	newCI=$(($cPosition % 3))
+	if [[ ${Board[$newRI,$newCI]} == "X" || ${Board[$newRI,$newCI]} == "O" ]]
+	 then
+		computerPlay
+	 else
+		Board[$newRI,$newCI]=$playerSign
+	fi
+}
+
+function playerPlay() {
+	read -p "Enter your position: " uPosition
+	newRI=$(($uPosition / 3))
+	newCI=$(($uPosition % 3))
+	Board[$newRI,$newCI]=$playerSign
+}
+
 Turn=$( whoPlays )
-echo $Turn
 boardMaking
 
 function startGame() {
+if [[ $Turn -eq "Player" ]]
+ then
+	p=0
+	printf "Player will play first"
+ else
+	p=1
+	printf "Computer will play first"
+fi
+	displayBoard
 	while [[ $n -lt 9 ]]
 	 do
-		player=$( assignLetter )
+		if [[ $(($p % 2)) -eq 0 ]]
+		 then
+			playerSign=$( assignLetter )
+			playerPlay
+		 else
+			playerSign=$( assignLetter )
+			computerPlay
+		fi
 		displayBoard
-		read -p "Enter your position: " position
-		newRI=$(($position / 3))
-		newCI=$(($position % 3))
-		Board[$newRI,$newCI]=$player
 		TicTacToeApp
 		((n++))
+      ((p++))
 	 done
 }
 startGame
