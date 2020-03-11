@@ -120,15 +120,98 @@ function TicTacToeApp() {
 }
 
 function computerPlay() {
-	cPosition=$((RANDOM%9))
-	newRI=$(($cPosition / 3))
-	newCI=$(($cPosition % 3))
-	if [[ ${Board[$newRI,$newCI]} == "X" || ${Board[$newRI,$newCI]} == "O" ]]
+
+if [[ ${Board[0,0]} == "$playerSign" && ${Board[0,1]} == "$playerSign" && ${Board[0,2]} == "2" ]]
+    then
+      Board[0,2]=$playerSign
+    elif [[ ${Board[0,1]} == "$playerSign" && ${Board[0,2]} == "$playerSign" && ${Board[0,0]} == "0" ]]
+    then
+      Board[0,0]=$playerSign
+    elif [[ ${Board[0,0]} == "$playerSign" && ${Board[0,2]} == "$playerSign" && ${Board[0,1]} == "1" ]]
+    then
+      Board[0,1]=$playerSign
+#----------------------------------------------------------------------------------------------------------
+    elif [[ ${Board[1,0]} == "$playerSign" && ${Board[1,1]} == "$playerSign" && ${Board[1,2]} == "5" ]]
+    then
+      Board[1,2]=$playerSign
+    elif [[ ${Board[1,1]} == "$playerSign" && ${Board[1,2]} == "playerSign" && ${Board[1,0]} == "3" ]]
+    then
+      Board[1,0]=$playerSign
+    elif [[ ${Board[1,0]} == "$playerSign" && ${Board[1,2]} == "$playerSign" && ${Board[1,1]} == "4" ]]
+    then
+      Board[1,1]=$playerSign
+#--------------------------------------------------------------------------------------------------------
+    elif [[ ${Board[2,0]} == "$playerSign" && ${Board[2,1]} == "$playerSign" && ${Board[2,2]} == "8" ]]
+    then
+      Board[2,2]=$playerSign
+    elif [[ ${Board[2,1]} == "$playerSign" && ${Board[2,2]} == "$playerSign" && ${Board[2,0]} == "6" ]]
+    then
+     	Board[2,0]=$playerSign
+    elif [[ ${Board[2,0]} == "$playerSign" && ${Board[2,2]} == "$playerSign" && ${Board[2,1]} == "7" ]]
+    then
+      Board[2,1]=$playerSign
+#--------------------------------------------------------------------------------------------------------
+	 elif [[ ${Board[0,0]} == "$playerSign" && ${Board[1,0]} == "$playerSign" && ${Board[2,0]} == "6" ]]
+    then
+      Board[2,0]=$playerSign
+	 elif [[ ${Board[1,0]} == "$playerSign" && ${Board[2,0]} == "$playerSign" && ${Board[0,0]} == "0" ]]
+    then
+      Board[0,0]=$playerSign
+	 elif [[ ${Board[0,0]} == "$playerSign" && ${Board[2,0]} == "$playerSign" && ${Board[1,0]} == "3" ]]
+    then
+      Board[1,0]=$playerSign
+#-------------------------------------------------------------------------------------------------------
+	 elif [[ ${Board[0,1]} == "$playerSign" && ${Board[1,1]} == "$playerSign" && ${Board[2,1]} == "7" ]]
+    then
+      Board[2,1]=$playerSign
+	 elif [[ ${Board[1,1]} == "$playerSign" && ${Board[2,1]} == "$playerSign" && ${Board[0,1]} == "1" ]]
+    then
+      Board[0,1]=$playerSign
+	 elif [[ ${Board[0,1]} == "$playerSign" && ${Board[2,1]} == "$playerSign" && ${Board[1,1]} == "4" ]]
+    then
+      Board[1,1]=$playerSign
+#-------------------------------------------------------------------------------------------------------
+	 elif [[ ${Board[0,2]} == "$playerSign" && ${Board[1,2]} == "$playerSign" && ${Board[2,2]} == "8" ]]
+    then
+      Board[2,2]=$playerSign
+	 elif [[ ${Board[1,2]} == "$playerSign" && ${Board[2,2]} == "$playerSign" && ${Board[0,2]} == "2" ]]
 	 then
-		computerPlay
+      Board[0,2]=$playerSign
+	 elif [[ ${Board[0,2]} == "$playerSign" && ${Board[2,2]} == "$playerSign" && ${Board[1,2]} == "5" ]]
+    then
+      Board[1,2]=$playerSign
+#------------------------------------------------------------------------------------------------------
+	 elif [[ ${Board[0,0]} == "$playerSign" && ${Board[2,2]} == "$playerSign" && ${Board[1,1]} == "4" ]]
+    then
+      Board[1,1]=$playerSign
+	 elif [[ ${Board[0,0]} == "$playerSign" && ${Board[1,1]} == "$playerSign" && ${Board[2,2]} == "8" ]]
+    then
+      Board[2,2]=$playerSign
+	 elif [[ ${Board[1,1]} == "$playerSign" && ${Board[2,2]} == "$playerSign" && ${Board[0,0]} == "0" ]]
+    then
+      Board[0,0]=$playerSign
+#------------------------------------------------------------------------------------------------------
+	 elif [[ ${Board[2,0]} == "$playerSign" && ${Board[0,2]} == "$playerSign" && ${Board[1,1]} == "4" ]]
+    then
+      Board[1,1]=$playerSign
+	 elif [[ ${Board[2,0]} == "$playerSign" && ${Board[1,1]} == "$playerSign" && ${Board[0,2]} == "2" ]]
+    then
+      Board[0,2]=$playerSign
+	 elif [[ ${Board[1,1]} == "$playerSign" && ${Board[0,2]} == "$playerSign" && ${Board[2,0]} == "6" ]]
+    then
+      Board[2,0]=$playerSign
 	 else
-		Board[$newRI,$newCI]=$playerSign
-	fi
+	 	cPosition=$((RANDOM%9))
+   	newRI=$(($cPosition / 3))
+   	newCI=$(($cPosition % 3))
+   	if [[ ${Board[$newRI,$newCI]} == "X" || ${Board[$newRI,$newCI]} == "O" ]]
+    	 then
+      	computerPlay
+    	 else
+      	Board[$newRI,$newCI]=$playerSign
+   	fi
+
+fi
 }
 
 function playerPlay() {
