@@ -121,168 +121,234 @@ function TicTacToeApp() {
 
 function computerPlay() {
 
-
-if [[ ${Board[0,0]} == "$prevSign" && ${Board[0,1]} == "$prevSign" && ${Board[0,2]} == "2" ]]
+if [[ ${Board[0,0]} == "$playerSign" && ${Board[0,1]} == "$playerSign" && ${Board[0,2]} == "2" ]]
     then
       Board[0,2]=$playerSign
-    elif [[ ${Board[0,1]} == "$prevSign" && ${Board[0,2]} == "$prevSign" && ${Board[0,0]} == "0" ]]
-    then
-      Board[0,0]=$playerSign
-    elif [[ ${Board[0,0]} == "$prevSign" && ${Board[0,2]} == "$prevSign" && ${Board[0,1]} == "1" ]]
-    then
-      Board[0,1]=$playerSign
-#----------------------------------------------------------------------------------------------------------
-    elif [[ ${Board[1,0]} == "$prevSign" && ${Board[1,1]} == "$prevSign" && ${Board[1,2]} == "5" ]]
-    then
-      Board[1,2]=$playerSign
-    elif [[ ${Board[1,1]} == "$prevSign" && ${Board[1,2]} == "$prevSign" && ${Board[1,0]} == "3" ]]
-    then
-      Board[1,0]=$playerSign
-    elif [[ ${Board[1,0]} == "$prevSign" && ${Board[1,2]} == "$prevSign" && ${Board[1,1]} == "4" ]]
-    then
-      Board[1,1]=$playerSign
-#--------------------------------------------------------------------------------------------------------
-    elif [[ ${Board[2,0]} == "$prevSign" && ${Board[2,1]} == "$prevSign" && ${Board[2,2]} == "8" ]]
-    then
-      Board[2,2]=$playerSign
-    elif [[ ${Board[2,1]} == "$prevSign" && ${Board[2,2]} == "$prevSign" && ${Board[2,0]} == "6" ]]
-    then
-      Board[2,0]=$playerSign
-    elif [[ ${Board[2,0]} == "$prevSign" && ${Board[2,2]} == "$prevSign" && ${Board[2,1]} == "7" ]]
-    then
-      Board[2,1]=$playerSign
-#--------------------------------------------------------------------------------------------------------
-    elif [[ ${Board[0,0]} == "$prevSign" && ${Board[1,0]} == "$prevSign" && ${Board[2,0]} == "6" ]]
-    then
-      Board[2,0]=$playerSign
-    elif [[ ${Board[1,0]} == "$prevSign" && ${Board[2,0]} == "$prevSign" && ${Board[0,0]} == "0" ]]
-    then
-      Board[0,0]=$playerSign
-    elif [[ ${Board[0,0]} == "$prevSign" && ${Board[2,0]} == "$prevSign" && ${Board[1,0]} == "3" ]]
-    then
-      Board[1,0]=$playerSign
-#------------------------------------------------------------------------------------------------------- 
-    elif [[ ${Board[0,1]} == "$prevSign" && ${Board[1,1]} == "$prevSign" && ${Board[2,1]} == "7" ]]
-    then
-      Board[2,1]=$playerSign
-    elif [[ ${Board[1,1]} == "$prevSign" && ${Board[2,1]} == "$prevSign" && ${Board[0,1]} == "1" ]]
-    then
-      Board[0,1]=$playerSign
-    elif [[ ${Board[0,1]} == "$prevSign" && ${Board[2,1]} == "$prevSign" && ${Board[1,1]} == "4" ]]
-    then
-      Board[1,1]=$playerSign
-#------------------------------------------------------------------------------------------------------- 
-    elif [[ ${Board[0,2]} == "$prevSign" && ${Board[1,2]} == "$prevSign" && ${Board[2,2]} == "8" ]]
-    then
-      Board[2,2]=$playerSign
-    elif [[ ${Board[1,2]} == "$prevSign" && ${Board[2,2]} == "$prevSign" && ${Board[0,2]} == "2" ]]
-    then
-      Board[0,2]=$playerSign
-    elif [[ ${Board[0,2]} == "$prevSign" && ${Board[2,2]} == "$prevSign" && ${Board[1,2]} == "5" ]]
-    then
-      Board[1,2]=$playerSign
-#------------------------------------------------------------------------------------------------------  
-    elif [[ ${Board[0,0]} == "$prevSign" && ${Board[2,2]} == "$prevSign" && ${Board[1,1]} == "4" ]]
-    then
-      Board[1,1]=$playerSign
-    elif [[ ${Board[0,0]} == "$prevSign" && ${Board[1,1]} == "$prevSign" && ${Board[2,2]} == "8" ]]
-    then
-      Board[2,2]=$playerSign
-    elif [[ ${Board[1,1]} == "$prevSign" && ${Board[2,2]} == "$prevSign" && ${Board[0,0]} == "0" ]]
-    then
-      Board[0,0]=$playerSign
-#------------------------------------------------------------------------------------------------------  
-    elif [[ ${Board[2,0]} == "$prevSign" && ${Board[0,2]} == "$prevSign" && ${Board[1,1]} == "4" ]]
-    then
-      Board[1,1]=$playerSign
-	 elif [[ ${Board[2,0]} == "$prevSign" && ${Board[1,1]} == "$prevSign" && ${Board[0,2]} == "2" ]]
-    then
-      Board[0,2]=$playerSign
-    elif [[ ${Board[1,1]} == "$prevSign" && ${Board[0,2]} == "$prevSign" && ${Board[2,0]} == "6" ]]
-    then
-      Board[2,0]=$playerSign
-
-	 elif [[ ${Board[0,0]} == "$playerSign" && ${Board[0,1]} == "$playerSign" && ${Board[0,2]} == "2" ]]
-    then
-      Board[0,2]=$playerSign
+		return
     elif [[ ${Board[0,1]} == "$playerSign" && ${Board[0,2]} == "$playerSign" && ${Board[0,0]} == "0" ]]
     then
       Board[0,0]=$playerSign
+		return
     elif [[ ${Board[0,0]} == "$playerSign" && ${Board[0,2]} == "$playerSign" && ${Board[0,1]} == "1" ]]
     then
       Board[0,1]=$playerSign
+		return
 #----------------------------------------------------------------------------------------------------------
     elif [[ ${Board[1,0]} == "$playerSign" && ${Board[1,1]} == "$playerSign" && ${Board[1,2]} == "5" ]]
     then
       Board[1,2]=$playerSign
+		return
     elif [[ ${Board[1,1]} == "$playerSign" && ${Board[1,2]} == "playerSign" && ${Board[1,0]} == "3" ]]
     then
       Board[1,0]=$playerSign
+		return
     elif [[ ${Board[1,0]} == "$playerSign" && ${Board[1,2]} == "$playerSign" && ${Board[1,1]} == "4" ]]
     then
       Board[1,1]=$playerSign
+		return
 #--------------------------------------------------------------------------------------------------------
     elif [[ ${Board[2,0]} == "$playerSign" && ${Board[2,1]} == "$playerSign" && ${Board[2,2]} == "8" ]]
     then
       Board[2,2]=$playerSign
+		return
     elif [[ ${Board[2,1]} == "$playerSign" && ${Board[2,2]} == "$playerSign" && ${Board[2,0]} == "6" ]]
     then
      	Board[2,0]=$playerSign
+		return
     elif [[ ${Board[2,0]} == "$playerSign" && ${Board[2,2]} == "$playerSign" && ${Board[2,1]} == "7" ]]
     then
       Board[2,1]=$playerSign
+		return
 #--------------------------------------------------------------------------------------------------------
 	 elif [[ ${Board[0,0]} == "$playerSign" && ${Board[1,0]} == "$playerSign" && ${Board[2,0]} == "6" ]]
     then
       Board[2,0]=$playerSign
+		return
 	 elif [[ ${Board[1,0]} == "$playerSign" && ${Board[2,0]} == "$playerSign" && ${Board[0,0]} == "0" ]]
     then
       Board[0,0]=$playerSign
+		return
 	 elif [[ ${Board[0,0]} == "$playerSign" && ${Board[2,0]} == "$playerSign" && ${Board[1,0]} == "3" ]]
     then
       Board[1,0]=$playerSign
+		return
 #-------------------------------------------------------------------------------------------------------
 	 elif [[ ${Board[0,1]} == "$playerSign" && ${Board[1,1]} == "$playerSign" && ${Board[2,1]} == "7" ]]
     then
       Board[2,1]=$playerSign
+		return
 	 elif [[ ${Board[1,1]} == "$playerSign" && ${Board[2,1]} == "$playerSign" && ${Board[0,1]} == "1" ]]
     then
       Board[0,1]=$playerSign
+		return
 	 elif [[ ${Board[0,1]} == "$playerSign" && ${Board[2,1]} == "$playerSign" && ${Board[1,1]} == "4" ]]
     then
       Board[1,1]=$playerSign
+		return
 #-------------------------------------------------------------------------------------------------------
 	 elif [[ ${Board[0,2]} == "$playerSign" && ${Board[1,2]} == "$playerSign" && ${Board[2,2]} == "8" ]]
     then
       Board[2,2]=$playerSign
+		return
 	 elif [[ ${Board[1,2]} == "$playerSign" && ${Board[2,2]} == "$playerSign" && ${Board[0,2]} == "2" ]]
 	 then
       Board[0,2]=$playerSign
+		return
 	 elif [[ ${Board[0,2]} == "$playerSign" && ${Board[2,2]} == "$playerSign" && ${Board[1,2]} == "5" ]]
     then
       Board[1,2]=$playerSign
+		return
 #------------------------------------------------------------------------------------------------------
 	 elif [[ ${Board[0,0]} == "$playerSign" && ${Board[2,2]} == "$playerSign" && ${Board[1,1]} == "4" ]]
     then
       Board[1,1]=$playerSign
+		return
 	 elif [[ ${Board[0,0]} == "$playerSign" && ${Board[1,1]} == "$playerSign" && ${Board[2,2]} == "8" ]]
     then
       Board[2,2]=$playerSign
+		return
 	 elif [[ ${Board[1,1]} == "$playerSign" && ${Board[2,2]} == "$playerSign" && ${Board[0,0]} == "0" ]]
     then
       Board[0,0]=$playerSign
+		return
 #------------------------------------------------------------------------------------------------------
 	 elif [[ ${Board[2,0]} == "$playerSign" && ${Board[0,2]} == "$playerSign" && ${Board[1,1]} == "4" ]]
     then
       Board[1,1]=$playerSign
+		return
 	 elif [[ ${Board[2,0]} == "$playerSign" && ${Board[1,1]} == "$playerSign" && ${Board[0,2]} == "2" ]]
     then
       Board[0,2]=$playerSign
+		return
 	 elif [[ ${Board[1,1]} == "$playerSign" && ${Board[0,2]} == "$playerSign" && ${Board[2,0]} == "6" ]]
     then
       Board[2,0]=$playerSign
-	 else
-	 	cPosition=$((RANDOM%9))
+		return
+
+#blocking
+	 elif [[ ${Board[0,0]} == "$prevSign" && ${Board[0,1]} == "$prevSign" && ${Board[0,2]} == "2" ]]
+    then
+      Board[0,2]=$playerSign
+		return
+    elif [[ ${Board[0,1]} == "$prevSign" && ${Board[0,2]} == "$prevSign" && ${Board[0,0]} == "0" ]]
+    then
+      Board[0,0]=$playerSign
+		return
+    elif [[ ${Board[0,0]} == "$prevSign" && ${Board[0,2]} == "$prevSign" && ${Board[0,1]} == "1" ]]
+    then
+      Board[0,1]=$playerSign
+		return
+#----------------------------------------------------------------------------------------------------------
+    elif [[ ${Board[1,0]} == "$prevSign" && ${Board[1,1]} == "$prevSign" && ${Board[1,2]} == "5" ]]
+    then
+      Board[1,2]=$playerSign
+		return
+    elif [[ ${Board[1,1]} == "$prevSign" && ${Board[1,2]} == "$prevSign" && ${Board[1,0]} == "3" ]]
+    then
+      Board[1,0]=$playerSign
+		return
+    elif [[ ${Board[1,0]} == "$prevSign" && ${Board[1,2]} == "$prevSign" && ${Board[1,1]} == "4" ]]
+    then
+      Board[1,1]=$playerSign
+		return
+#--------------------------------------------------------------------------------------------------------
+    elif [[ ${Board[2,0]} == "$prevSign" && ${Board[2,1]} == "$prevSign" && ${Board[2,2]} == "8" ]]
+    then
+      Board[2,2]=$playerSign
+		return
+    elif [[ ${Board[2,1]} == "$prevSign" && ${Board[2,2]} == "$prevSign" && ${Board[2,0]} == "6" ]]
+    then
+      Board[2,0]=$playerSign
+		return
+    elif [[ ${Board[2,0]} == "$prevSign" && ${Board[2,2]} == "$prevSign" && ${Board[2,1]} == "7" ]]
+    then
+      Board[2,1]=$playerSign
+		return
+#--------------------------------------------------------------------------------------------------------
+    elif [[ ${Board[0,0]} == "$prevSign" && ${Board[1,0]} == "$prevSign" && ${Board[2,0]} == "6" ]]
+    then
+      Board[2,0]=$playerSign
+		return
+    elif [[ ${Board[1,0]} == "$prevSign" && ${Board[2,0]} == "$prevSign" && ${Board[0,0]} == "0" ]]
+    then
+      Board[0,0]=$playerSign
+		return
+    elif [[ ${Board[0,0]} == "$prevSign" && ${Board[2,0]} == "$prevSign" && ${Board[1,0]} == "3" ]]
+    then
+      Board[1,0]=$playerSign
+		return
+#------------------------------------------------------------------------------------------------------- 
+    elif [[ ${Board[0,1]} == "$prevSign" && ${Board[1,1]} == "$prevSign" && ${Board[2,1]} == "7" ]]
+    then
+      Board[2,1]=$playerSign
+		return
+    elif [[ ${Board[1,1]} == "$prevSign" && ${Board[2,1]} == "$prevSign" && ${Board[0,1]} == "1" ]]
+    then
+      Board[0,1]=$playerSign
+		return
+    elif [[ ${Board[0,1]} == "$prevSign" && ${Board[2,1]} == "$prevSign" && ${Board[1,1]} == "4" ]]
+    then
+      Board[1,1]=$playerSign
+		return
+#------------------------------------------------------------------------------------------------------- 
+    elif [[ ${Board[0,2]} == "$prevSign" && ${Board[1,2]} == "$prevSign" && ${Board[2,2]} == "8" ]]
+    then
+      Board[2,2]=$playerSign
+		return
+    elif [[ ${Board[1,2]} == "$prevSign" && ${Board[2,2]} == "$prevSign" && ${Board[0,2]} == "2" ]]
+    then
+      Board[0,2]=$playerSign
+		return
+    elif [[ ${Board[0,2]} == "$prevSign" && ${Board[2,2]} == "$prevSign" && ${Board[1,2]} == "5" ]]
+    then
+      Board[1,2]=$playerSign
+		return
+#------------------------------------------------------------------------------------------------------  
+    elif [[ ${Board[0,0]} == "$prevSign" && ${Board[2,2]} == "$prevSign" && ${Board[1,1]} == "4" ]]
+    then
+      Board[1,1]=$playerSign
+		return
+    elif [[ ${Board[0,0]} == "$prevSign" && ${Board[1,1]} == "$prevSign" && ${Board[2,2]} == "8" ]]
+    then
+      Board[2,2]=$playerSign
+		return
+    elif [[ ${Board[1,1]} == "$prevSign" && ${Board[2,2]} == "$prevSign" && ${Board[0,0]} == "0" ]]
+    then
+      Board[0,0]=$playerSign
+		return
+#------------------------------------------------------------------------------------------------------  
+    elif [[ ${Board[2,0]} == "$prevSign" && ${Board[0,2]} == "$prevSign" && ${Board[1,1]} == "4" ]]
+    then
+      Board[1,1]=$playerSign
+		return
+	 elif [[ ${Board[2,0]} == "$prevSign" && ${Board[1,1]} == "$prevSign" && ${Board[0,2]} == "2" ]]
+    then
+      Board[0,2]=$playerSign
+		return
+    elif [[ ${Board[1,1]} == "$prevSign" && ${Board[0,2]} == "$prevSign" && ${Board[2,0]} == "6" ]]
+    then
+      Board[2,0]=$playerSign
+		return
+fi
+
+#corners
+	for ((i=0; i<row; i++))
+	 do
+		for ((j=0; j<column; j++))
+		 do
+			if [[ ${Board[$i,$j]} == "0" || ${Board[$i,$j]} == "$2" || ${Board[$i,$j]} == "6" || ${Board[$i,$j]} == "8" ]]
+			 then
+				Board[$i,$j]=$playerSign
+				return
+			fi
+		 done
+	 done
+
+#------------------------------------------------------------------------------------------------------
+k=0
+if [[ $k == "0" ]]
+ then
+		cPosition=$((RANDOM%9))
    	newRI=$(($cPosition / 3))
    	newCI=$(($cPosition % 3))
    	if [[ ${Board[$newRI,$newCI]} == "X" || ${Board[$newRI,$newCI]} == "O" ]]
@@ -291,6 +357,7 @@ if [[ ${Board[0,0]} == "$prevSign" && ${Board[0,1]} == "$prevSign" && ${Board[0,
     	 else
       	Board[$newRI,$newCI]=$playerSign
    	fi
+	k=1
 fi
 }
 
