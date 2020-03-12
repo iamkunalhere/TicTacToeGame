@@ -349,21 +349,19 @@ if [[ ${Board[1,1]} == "4" ]]
 		Board[1,1]=$playerSign
 		return
 fi
-#------------------------------------------------------------------------------------------------------
-k=0
-if [[ $k == "0" ]]
- then
-		cPosition=$((RANDOM%9))
-   	newRI=$(($cPosition / 3))
-   	newCI=$(($cPosition % 3))
-   	if [[ ${Board[$newRI,$newCI]} == "X" || ${Board[$newRI,$newCI]} == "O" ]]
-    	 then
-      	computerPlay
-    	 else
-      	Board[$newRI,$newCI]=$playerSign
-   	fi
-	k=1
-fi
+#sides------------------------------------------------------------------------------------------------------
+for ((i=0; i<row; i++))
+    do
+      for ((j=0; j<column; j++))
+       do
+         if [[ ${Board[$i,$j]} == "1" || ${Board[$i,$j]} == "3" || ${Board[$i,$j]} == "5" || ${Board[$i,$j]} == "7" ]]
+          then
+            Board[$i,$j]=$playerSign
+            return
+         fi
+       done
+    done
+
 }
 
 function playerPlay() {
@@ -375,7 +373,7 @@ function playerPlay() {
 
 Turn=$( whoPlays )
 boardMaking
-prevSign=X
+prevSign=""
 function startGame() {
 if [[ $Turn -eq "Player" ]]
  then
@@ -388,6 +386,7 @@ fi
 	displayBoard
 	while [[ $n -lt 9 ]]
 	 do
+		prevSign=$playerSign
 		if [[ $(($p % 2)) -eq 0 ]]
 		 then
 			playerSign=$( assignLetter )
