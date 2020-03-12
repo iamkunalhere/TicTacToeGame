@@ -336,14 +336,19 @@ fi
 	 do
 		for ((j=0; j<column; j++))
 		 do
-			if [[ ${Board[$i,$j]} == "0" || ${Board[$i,$j]} == "$2" || ${Board[$i,$j]} == "6" || ${Board[$i,$j]} == "8" ]]
+			if [[ ${Board[$i,$j]} == "0" || ${Board[$i,$j]} == "2" || ${Board[$i,$j]} == "6" || ${Board[$i,$j]} == "8" ]]
 			 then
 				Board[$i,$j]=$playerSign
 				return
 			fi
 		 done
 	 done
-
+#center
+if [[ ${Board[1,1]} == "4" ]]
+ then
+		Board[1,1]=$playerSign
+		return
+fi
 #------------------------------------------------------------------------------------------------------
 k=0
 if [[ $k == "0" ]]
