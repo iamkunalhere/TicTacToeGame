@@ -1,3 +1,4 @@
+
 #!/bin/bash -x
 #Problem Statement : Tic Tac Toe Game.
 #Discription : This problem simulates as a Tic Tac Toe Player would like to challenge computer.
@@ -5,6 +6,9 @@
 #Date : 9 March 2020
 row=3
 column=3
+declare -A Board
+n=0
+prevSign=" "
 function displayBoard() {
 	for (( i=0; i<$row; i++ ))
 	 do
@@ -17,8 +21,7 @@ function displayBoard() {
 	 done
 		echo "---------------"
 }
-declare -A Board
-function  boardMaking() {
+function  buildTheBoard() {
 	local nums=0
 	for (( i=0; i<$row; i++ ))
 	 do
@@ -29,7 +32,6 @@ function  boardMaking() {
 		 done
 	 done
 }
-n=0
 function assignLetter() {
 	if [[ $(($n%2)) -eq 0 ]]
 	 then
@@ -48,46 +50,46 @@ state=$((RANDOM%2))
    fi
 }
 function TicTacToeApp() {
-	local win=0
-	if [[ ${Board[0,0]} == "X" && ${Board[0,1]} == "X" && ${Board[0,2]} == "X" ]]; then
-		win=1
-	 elif [[ ${Board[1,0]} == "X" && ${Board[1,1]} == "X" && ${Board[1,2]} == "X" ]]; then
-	 	win=1
-	 elif [[ ${Board[2,0]} == "X" && ${Board[2,1]} == "X" && ${Board[2,2]} == "X" ]]; then
-		win=1
-	 elif [[ ${Board[0,0]} == "X" && ${Board[1,0]} == "X" && ${Board[2,0]} == "X" ]]; then
-		win=1
-	 elif [[ ${Board[0,1]} == "X" && ${Board[1,1]} == "X" && ${Board[2,1]} == "X" ]]; then
-		win=1
-	 elif [[ ${Board[0,2]} == "X" && ${Board[1,2]} == "X" && ${Board[2,2]} == "X" ]]; then
-		win=1
-	 elif [[ ${Board[0,0]} == "X" && ${Board[1,1]} == "X" && ${Board[2,2]} == "X" ]]; then
-		win=1
-	 elif [[ ${Board[0,2]} == "X" && ${Board[1,1]} == "X" && ${Board[2,0]} == "X" ]]; then
-		win=1
-	fi
-	if [[ ${Board[0,0]} == "O" && ${Board[0,1]} == "O" && ${Board[0,2]} == "O" ]];  then
-      win=1
-    elif [[ ${Board[1,0]} == "O" && ${Board[1,1]} == "O" && ${Board[1,2]} == "O" ]]; then
-      win=1
-    elif [[ ${Board[2,0]} == "O" && ${Board[2,1]} == "O" && ${Board[2,2]} == "O" ]]; then
-      win=1
-    elif [[ ${Board[0,0]} == "O" && ${Board[1,0]} == "O" && ${Board[2,0]} == "O" ]]; then
-      win=1
-    elif [[ ${Board[0,1]} == "O" && ${Board[1,1]} == "O" && ${Board[2,1]} == "O" ]]; then
-      win=1
-    elif [[ ${Board[0,2]} == "O" && ${Board[1,2]} == "O" && ${Board[2,2]} == "O" ]]; then
-      win=1
-    elif [[ ${Board[0,0]} == "O" && ${Board[1,1]} == "O" && ${Board[2,2]} == "O" ]]; then
-      win=1
-    elif [[ ${Board[0,2]} == "O" && ${Board[1,1]} == "O" && ${Board[2,0]} == "O" ]]; then
-      win=1
-   fi
-	if [[ $win == 1 ]]; then
-		printf "$playerSign has won"
-		displayBoard
-	   exit
-	fi
+	local rowCounter=0
+	local	colCounter=0
+	local leftDiCounter=0
+	local rightDiCounter=0
+	local currentRow=0
+	local currentColumn=0
+	for ((i=0; i<$row; i++))
+	 do
+		currentRow=i
+		for ((j=0; j<$column; j++))
+		 do
+			if [[ ${Board[$i,$j]} == "$playerSign" ]]
+			 then
+				((rowCounter++))
+			fi
+			if [[ ${Board[$j,$i]} == "$playerSign" ]]
+			 then
+				((colCounter++))
+			fi
+			if [[ $i == $j && ${Board[$i,$j]} == "$playerSign" ]]
+			 then
+				((leftDiCounter++))
+			fi
+			if [[ $j == $(($row-$currentRow-1)) && ${Board[$i,$j]} == "$playerSign" ]]
+			 then
+				((rightDiCounter++))
+			fi
+			if [[ $rowCounter == $column || $colCounter == $column || $leftDiCounter == $column || $rightDiCounter == $column ]]
+			 then
+					echo "$playerSign is Winner"
+					displayBoard
+					exit
+			fi
+			if [[ $j == $(($row-1)) ]]
+			 then
+				rowCounter=0
+				colCounter=0
+			fi
+		 done
+	 done
 	if [[ $n == 8 ]]; then
 		displayBoard
 		printf "Game Over"
@@ -105,49 +107,49 @@ if [[ ${Board[0,0]} == "$playerSign" && ${Board[0,1]} == "$playerSign" && ${Boar
       Board[0,1]=$playerSign
 		return
     elif [[ ${Board[1,0]} == "$playerSign" && ${Board[1,1]} == "$playerSign" && ${Board[1,2]} == "5" ]]; then
-      Board[1,2]=$playerSign
+     	Board[1,2]=$playerSign
 		return
     elif [[ ${Board[1,1]} == "$playerSign" && ${Board[1,2]} == "playerSign" && ${Board[1,0]} == "3" ]];  then
-      Board[1,0]=$playerSign
+    	Board[1,0]=$playerSign
 		return
     elif [[ ${Board[1,0]} == "$playerSign" && ${Board[1,2]} == "$playerSign" && ${Board[1,1]} == "4" ]]; then
-      Board[1,1]=$playerSign
+     	Board[1,1]=$playerSign
 		return
     elif [[ ${Board[2,0]} == "$playerSign" && ${Board[2,1]} == "$playerSign" && ${Board[2,2]} == "8" ]]; then
-      Board[2,2]=$playerSign
+    	Board[2,2]=$playerSign
 		return
-    elif [[ ${Board[2,1]} == "$playerSign" && ${Board[2,2]} == "$playerSign" && ${Board[2,0]} == "6" ]]; then
+ 	 elif [[ ${Board[2,1]} == "$playerSign" && ${Board[2,2]} == "$playerSign" && ${Board[2,0]} == "6" ]]; then
      	Board[2,0]=$playerSign
 		return
     elif [[ ${Board[2,0]} == "$playerSign" && ${Board[2,2]} == "$playerSign" && ${Board[2,1]} == "7" ]]; then
       Board[2,1]=$playerSign
 		return
 	 elif [[ ${Board[0,0]} == "$playerSign" && ${Board[1,0]} == "$playerSign" && ${Board[2,0]} == "6" ]]; then
-      Board[2,0]=$playerSign
+     	Board[2,0]=$playerSign
 		return
 	 elif [[ ${Board[1,0]} == "$playerSign" && ${Board[2,0]} == "$playerSign" && ${Board[0,0]} == "0" ]]; then
       Board[0,0]=$playerSign
 		return
 	 elif [[ ${Board[0,0]} == "$playerSign" && ${Board[2,0]} == "$playerSign" && ${Board[1,0]} == "3" ]]; then
-      Board[1,0]=$playerSign
+     	Board[1,0]=$playerSign
 		return
 	 elif [[ ${Board[0,1]} == "$playerSign" && ${Board[1,1]} == "$playerSign" && ${Board[2,1]} == "7" ]]; then
-      Board[2,1]=$playerSign
+     	Board[2,1]=$playerSign
 		return
 	 elif [[ ${Board[1,1]} == "$playerSign" && ${Board[2,1]} == "$playerSign" && ${Board[0,1]} == "1" ]]; then
-      Board[0,1]=$playerSign
+     	Board[0,1]=$playerSign
 		return
 	 elif [[ ${Board[0,1]} == "$playerSign" && ${Board[2,1]} == "$playerSign" && ${Board[1,1]} == "4" ]]; then
-      Board[1,1]=$playerSign
+     	Board[1,1]=$playerSign
 		return
- 	 elif [[ ${Board[0,2]} == "$playerSign" && ${Board[1,2]} == "$playerSign" && ${Board[2,2]} == "8" ]]; then
-      Board[2,2]=$playerSign
+  	 elif [[ ${Board[0,2]} == "$playerSign" && ${Board[1,2]} == "$playerSign" && ${Board[2,2]} == "8" ]]; then
+    	Board[2,2]=$playerSign
 		return
 	 elif [[ ${Board[1,2]} == "$playerSign" && ${Board[2,2]} == "$playerSign" && ${Board[0,2]} == "2" ]]; then
-      Board[0,2]=$playerSign
+ 	   Board[0,2]=$playerSign
 		return
 	 elif [[ ${Board[0,2]} == "$playerSign" && ${Board[2,2]} == "$playerSign" && ${Board[1,2]} == "5" ]]; then
-      Board[1,2]=$playerSign
+     	Board[1,2]=$playerSign
 		return
 	 elif [[ ${Board[0,0]} == "$playerSign" && ${Board[2,2]} == "$playerSign" && ${Board[1,1]} == "4" ]]; then
       Board[1,1]=$playerSign
@@ -159,7 +161,7 @@ if [[ ${Board[0,0]} == "$playerSign" && ${Board[0,1]} == "$playerSign" && ${Boar
       Board[0,0]=$playerSign
 		return
 	 elif [[ ${Board[2,0]} == "$playerSign" && ${Board[0,2]} == "$playerSign" && ${Board[1,1]} == "4" ]]; then
-      Board[1,1]=$playerSign
+     	Board[1,1]=$playerSign
 		return
 	 elif [[ ${Board[2,0]} == "$playerSign" && ${Board[1,1]} == "$playerSign" && ${Board[0,2]} == "2" ]]; then
       Board[0,2]=$playerSign
@@ -278,20 +280,17 @@ function playerPlay() {
 	newCI=$(($uPosition % 3))
 	Board[$newRI,$newCI]=$playerSign
 }
-Turn=$( whoPlays )
-boardMaking
-prevSign=""
 function startGame() {
-if [[ $Turn -eq "Player" ]]; then
+if [[ $Turn == "Player" ]]; then
 	p=0
-	printf "Player will play first"
- else
+	printf "$Turn will play first"
+ elif [[ $Turn == "Computer" ]]; then
 	p=1
-	printf "Computer will play first"
+	printf "$Turn will play first"
 fi
-	displayBoard
 	while [[ $n -lt 9 ]]
 	 do
+		displayBoard
 		prevSign=$playerSign
 		if [[ $(($p % 2)) -eq 0 ]]; then
 			playerSign=$( assignLetter )
@@ -300,10 +299,11 @@ fi
 			playerSign=$( assignLetter )
 			computerPlay
 		fi
-		displayBoard
 		TicTacToeApp
 		((n++))
       ((p++))
 	 done
 }
+Turn=$( whoPlays )
+buildTheBoard
 startGame
