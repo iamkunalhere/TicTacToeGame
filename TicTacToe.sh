@@ -3,8 +3,8 @@
 #Discription : This problem simulates as a Tic Tac Toe Player would like to challenge computer.
 #Author : Kunal Jadhav
 #Date : 9 March 2020
-ROW=4
-COLUMN=4
+ROW=3
+COLUMN=3
 declare -A Board
 n=0
 prevSign=0
@@ -13,14 +13,21 @@ flagForSwitchFunctions=0
 function displayBoard() {
 	for (( i=0; i<$ROW; i++ ))
 	 do
-		echo "---------------"
+		echo
+#		echo "---------------"
 		for (( j=0; j<$COLUMN; j++))
 		 do
-			printf "| ${Board[$i,$j]} |"
+			if [[ ${Board[$i,$j]} -ge 10 ]]
+			 then
+				printf "| ${Board[$i,$j]}  |"
+			 else
+			printf "|  ${Board[$i,$j]}  |"
+			fi
 		 done
 		printf "\n"
 	 done
-	echo "---------------"
+	echo
+#	echo "---------------"
 }
 function  buildTheBoard() {
 	local nums=0
@@ -207,6 +214,27 @@ function rightDiagonalChecker() {
 		return
 	fi
 }
+function cornerCheck() {
+	for (( i=0; i<$((ROW*ROW)); i++ ))
+	 do
+		if [[ $i == $((ROW-ROW)) || $i == $((ROW-1)) || $i == $((ROW*ROW-ROW)) || $i == $((ROW*ROW-1)) ]]
+		 then
+			if [[ ${Board[$((i/ROW)),$((i%ROW))]} != "$prevSign" && ${Board[$((i/ROW)),$((i%ROW))]} != "$playerSign" ]]
+			 then
+				Board[$((i/ROW)),$((i%ROW))]=$playerSign
+				flagForSwitchFunctions=1
+				return
+			fi
+	 done
+}
+function centerCheck() {
+	if [[ ${Board[$((ROW*ROW/2)),$((ROW*ROW%2))]} != "$prevSign" && ${Board[$((ROW*ROW/2)),$((ROW*ROW%2))]} != "$playerSign" ]]
+	 then
+		Board[$((ROW*ROW/2)),$((ROW*ROW%2))]= $playerSign
+		flagForSwitchFunctions=1
+		return
+	fi
+}
 function computerPlay() {
 
 checkSign=$playerSign
@@ -253,23 +281,17 @@ if [[ $flagForSwitchFunctions == 1 ]]
       return
 fi
 #corners
-	for ((i=0; i<$ROW; i++))
-	 do
-		for ((j=0; j<$COLUMN; j++))
-		 do
-			if [[ ${Board[$i,$j]} == "0" || ${Board[$i,$j]} == "2" || ${Board[$i,$j]} == "6" || ${Board[$i,$j]} == "8" ]]
-			 then
-				Board[$i,$j]=$playerSign
-				return
-			fi
-		 done
-	 done
-#center
-	if [[ ${Board[1,1]} == "4" ]]
- 	 then
-		Board[1,1]=$playerSign
+		cornerCheck
+if [[ $flagForSwitchFunctions == 1 ]]
+	then
 		return
-	fi
+fi
+#center
+	centerCheck
+if [[ $flagForSwitchFunctions == 1 ]]
+   then
+      return
+fi
 #sides
 	for ((i=0; i<$ROW; i++))
     do
