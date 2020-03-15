@@ -3,11 +3,12 @@
 #Discription : This problem simulates as a Tic Tac Toe Player would like to challenge computer.
 #Author : Kunal Jadhav
 #Date : 9 March 2020
-ROW=3
-COLUMN=3
+ROW=4
+COLUMN=4
 declare -A Board
 n=0
-prevSign=" "
+prevSign=0
+checkSign=0
 flagForSwitchFunctions=0
 function displayBoard() {
 	for (( i=0; i<$ROW; i++ ))
@@ -19,7 +20,7 @@ function displayBoard() {
 		 done
 		printf "\n"
 	 done
-		echo "---------------"
+	echo "---------------"
 }
 function  buildTheBoard() {
 	local nums=0
@@ -97,51 +98,59 @@ function TicTacToeApp() {
 	fi
 }
 function rowChecker() {
+	local rowCounter=0
+	local putInRow=0
+	local putInColumn=0
 	for ((i=0; i<$ROW; i++))
 	 do
 		for ((j=0; j<$COLUMN; j++))
 		 do
-			if [[ ${Board[$i,$j]} == "$playerSign" ]]
+			if [[ ${Board[$i,$j]} == "$checkSign" ]]
 			 then
-				((counter++))
+				((rowCounter++))
 			fi
-			if [[ ${Board[$i,$j]} != "$playerSign" ]]
+			if [[ ${Board[$i,$j]} != "$checkSign" ]]
 			 then
 				putInRow=$i
-				putInCol=$j
-			fi
-			if [[ $counter == $(($ROW-1)) && ${Board[$putInRow,$putInCol]} != $prevSign && ${Board[$putInRow,$putInCol]} != $playerSign  ]]
-			 then
-				Board[$putInRow,$putInCol]=$playerSign
-				flagForSwitchFunctions=1
-				return
+				putInColumn=$j
 			fi
 		 done
-		counter=0
+if [[ $rowCounter == $(($ROW-1)) && ${Board[$putInRow,$putInColumn]} != "$prevSign" && ${Board[$putInRow,$putInColumn]} != "$playerSign" ]]
+          then
+            Board[$putInRow,$putInColumn]=$playerSign
+            flagForSwitchFunctions=1
+            return
+          else
+				rowCounter=0
+fi
 	 done
 }
 function columnChecker() {
+	local columnCounter=0
+	local putInRow=0
+	local putInColumn=0
 	for ((i=0; i<$ROW; i++))
     do
       for ((j=0; j<$COLUMN; j++))
        do
-         if [[ ${Board[$j,$i]} == "$playerSign" ]]
+         if [[ ${Board[$j,$i]} == "$checkSign" ]]
           then
-            ((counter++))
+            ((columnCounter++))
          fi
-         if [[ ${Board[$j,$i]} != "$playerSign" ]]
+         if [[ ${Board[$j,$i]} != "$checkSign" ]]
           then
             putInRow=$j
-            putInCol=$i
-         fi
-			if [[ $counter == $(($ROW-1)) && ${Board[$putInRow,$putInCol]} != $prevSign && ${Board[$putInRow,$putInCol]} != $playerSign  ]]
-          then
-            Board[$putInRow,$putInCol]=$playerSign
-            flagForSwitchFunctions=1
-            return
+            putInColumn=$i
          fi
        done
-      counter=0
+if [[ $columnCounter == $(($ROW-1)) && ${Board[$putInRow,$putInColumn]} != "$prevSign" && ${Board[$putInRow,$putInColumn]} != "$playerSign" ]]
+          then
+            Board[$putInRow,$putInColumn]=$playerSign
+            flagForSwitchFunctions=1
+            return
+          else
+      		columnCounter=0
+fi
     done
 }
 function leftDiagonalChecker() {
@@ -152,18 +161,18 @@ function leftDiagonalChecker() {
 	 do
 		for (( j=0; j<$COLUMN; j++ ))
 		 do
-			if [[ $i == $j && ${Board[$i,$j]} == "$playerSign" ]]
+			if [[ $i == $j && ${Board[$i,$j]} == "$checkSign" ]]
           then
             ((leftDiCounter++))
 			fi
-			if [[ $i == $j && ${Board[$i,$j]} != "$playerSign" ]]
+			if [[ $i == $j && ${Board[$i,$j]} != "$checkSign" ]]
 			 then
 				leftDiRow=$i
 				leftDiCol=$j
 			fi
 		 done
 	 done
-	if [[ $leftDiCounter == $(($ROW-1)) && ${Board[$leftDiRow,$leftDiCol]} != $prevSign && ${Board[$leftDiRow,$leftDiCol]} != $playerSign ]]
+	if [[ $leftDiCounter == $(($ROW-1)) && ${Board[$leftDiRow,$leftDiCol]} != "$prevSign" && ${Board[$leftDiRow,$leftDiCol]} != "$playerSign" ]]
 	 then
 		Board[$leftDiRow,$leftDiCol]=$playerSign
 		flagForSwitchFunctions=1
@@ -180,18 +189,18 @@ function rightDiagonalChecker() {
 		currentRow=i
       for (( j=0; j<$COLUMN; j++ ))
        do
-			if [[ $j == $(($ROW-$currentRow-1)) && ${Board[$i,$j]} == "$playerSign" ]]
+			if [[ $j == $(($ROW-$currentRow-1)) && ${Board[$i,$j]} == "$checkSign" ]]
 	 		 then
 				((rightDiCounter++))
 			fi
-			if [[ $j == $(($ROW-$currentRow-1)) && ${Board[$i,$j]} != "$playerSign" ]]
+			if [[ $j == $(($ROW-$currentRow-1)) && ${Board[$i,$j]} != "$checkSign" ]]
 			 then
 				rightDiRow=$i
 				rightDiCol=$j
 			fi
 		 done
 	 done
-	if [[ $rightDiCounter == $(($ROW-1)) && ${Board[$rightDiRow,$rightDiCol]} != $prevSign && ${Board[$rightDiRow,$rightDiCol]} != $playerSign ]]
+	if [[ $rightDiCounter == $(($ROW-1)) && ${Board[$rightDiRow,$rightDiCol]} != "$prevSign" && ${Board[$rightDiRow,$rightDiCol]} != "$playerSign" ]]
 	 then
 		Board[$rightDiRow,$rightDiCol]=$playerSign
 		flagForSwitchFunctions=1
@@ -199,103 +208,50 @@ function rightDiagonalChecker() {
 	fi
 }
 function computerPlay() {
+
+checkSign=$playerSign
 		rowChecker
-	if [[ $flagForSwitchFunctions == 1 ]]
+if [[ $flagForSwitchFunctions == 1 ]]
  	 then
 		return
- 	 elif [[ $flagForSwitchFunctions == 0 ]]
- 	 then
+fi
 		columnChecker
- 	 elif [[ $flagForSwitchFunctions == 1 ]]
+if [[ $flagForSwitchFunctions == 1 ]]
  	 then
 		return
-	 elif [[ $flagForSwitchFunctions == 0 ]]
-	 then
+fi
 		leftDiagonalChecker
-	 elif [[ $flagForSwitchFunctions == 1 ]]
+if [[ $flagForSwitchFunctions == 1 ]]
 	 then
 		return
-	 elif [[ $flagForSwitchFunctions == 0 ]]
-	 then
+fi
 		rightDiagonalChecker
-	 elif [[ $flagForSwitchFunctions == 1 ]]
+if [[ $flagForSwitchFunctions == 1 ]]
 	 then
 		return
-	fi
+fi
 #blocking
-	if [[ ${Board[0,0]} == "$prevSign" && ${Board[0,1]} == "$prevSign" && ${Board[0,2]} == "2" ]]; then
-      Board[0,2]=$playerSign
-		return
-    elif [[ ${Board[0,1]} == "$prevSign" && ${Board[0,2]} == "$prevSign" && ${Board[0,0]} == "0" ]]; then
-      Board[0,0]=$playerSign
-		return
-    elif [[ ${Board[0,0]} == "$prevSign" && ${Board[0,2]} == "$prevSign" && ${Board[0,1]} == "1" ]]; then
-      Board[0,1]=$playerSign
-		return
-    elif [[ ${Board[1,0]} == "$prevSign" && ${Board[1,1]} == "$prevSign" && ${Board[1,2]} == "5" ]]; then
-      Board[1,2]=$playerSign
-		return
-    elif [[ ${Board[1,1]} == "$prevSign" && ${Board[1,2]} == "$prevSign" && ${Board[1,0]} == "3" ]]; then
-      Board[1,0]=$playerSign
-		return
-    elif [[ ${Board[1,0]} == "$prevSign" && ${Board[1,2]} == "$prevSign" && ${Board[1,1]} == "4" ]]; then
-      Board[1,1]=$playerSign
-		return
-    elif [[ ${Board[2,0]} == "$prevSign" && ${Board[2,1]} == "$prevSign" && ${Board[2,2]} == "8" ]]; then
-      Board[2,2]=$playerSign
-		return
-    elif [[ ${Board[2,1]} == "$prevSign" && ${Board[2,2]} == "$prevSign" && ${Board[2,0]} == "6" ]]; then
-      Board[2,0]=$playerSign
-		return
-    elif [[ ${Board[2,0]} == "$prevSign" && ${Board[2,2]} == "$prevSign" && ${Board[2,1]} == "7" ]]; then
-      Board[2,1]=$playerSign
-		return
-    elif [[ ${Board[0,0]} == "$prevSign" && ${Board[1,0]} == "$prevSign" && ${Board[2,0]} == "6" ]]; then
-      Board[2,0]=$playerSign
-		return
-    elif [[ ${Board[1,0]} == "$prevSign" && ${Board[2,0]} == "$prevSign" && ${Board[0,0]} == "0" ]]; then
-      Board[0,0]=$playerSign
-		return
-    elif [[ ${Board[0,0]} == "$prevSign" && ${Board[2,0]} == "$prevSign" && ${Board[1,0]} == "3" ]]; then
-      Board[1,0]=$playerSign
-		return
-    elif [[ ${Board[0,1]} == "$prevSign" && ${Board[1,1]} == "$prevSign" && ${Board[2,1]} == "7" ]]; then
-      Board[2,1]=$playerSign
-		return
-    elif [[ ${Board[1,1]} == "$prevSign" && ${Board[2,1]} == "$prevSign" && ${Board[0,1]} == "1" ]]; then
-      Board[0,1]=$playerSign
-		return
-    elif [[ ${Board[0,1]} == "$prevSign" && ${Board[2,1]} == "$prevSign" && ${Board[1,1]} == "4" ]]; then
-      Board[1,1]=$playerSign
-		return
-    elif [[ ${Board[0,2]} == "$prevSign" && ${Board[1,2]} == "$prevSign" && ${Board[2,2]} == "8" ]]; then
-      Board[2,2]=$playerSign
-		return
-    elif [[ ${Board[1,2]} == "$prevSign" && ${Board[2,2]} == "$prevSign" && ${Board[0,2]} == "2" ]]; then
-      Board[0,2]=$playerSign
-		return
-    elif [[ ${Board[0,2]} == "$prevSign" && ${Board[2,2]} == "$prevSign" && ${Board[1,2]} == "5" ]]; then
-      Board[1,2]=$playerSign
-		return
-    elif [[ ${Board[0,0]} == "$prevSign" && ${Board[2,2]} == "$prevSign" && ${Board[1,1]} == "4" ]]; then
-      Board[1,1]=$playerSign
-		return
-    elif [[ ${Board[0,0]} == "$prevSign" && ${Board[1,1]} == "$prevSign" && ${Board[2,2]} == "8" ]]; then
-      Board[2,2]=$playerSign
-		return
-    elif [[ ${Board[1,1]} == "$prevSign" && ${Board[2,2]} == "$prevSign" && ${Board[0,0]} == "0" ]]; then
-      Board[0,0]=$playerSign
-		return
-    elif [[ ${Board[2,0]} == "$prevSign" && ${Board[0,2]} == "$prevSign" && ${Board[1,1]} == "4" ]]; then
-      Board[1,1]=$playerSign
-		return
-	 elif [[ ${Board[2,0]} == "$prevSign" && ${Board[1,1]} == "$prevSign" && ${Board[0,2]} == "2" ]]; then
-      Board[0,2]=$playerSign
-		return
-    elif [[ ${Board[1,1]} == "$prevSign" && ${Board[0,2]} == "$prevSign" && ${Board[2,0]} == "6" ]]; then
-      Board[2,0]=$playerSign
-		return
-	fi
+checkSign=$prevSign
+      rowChecker
+if [[ $flagForSwitchFunctions == 1 ]]
+    then
+      return
+fi
+      columnChecker
+if [[ $flagForSwitchFunctions == 1 ]]
+    then
+      return
+fi
+      leftDiagonalChecker
+if [[ $flagForSwitchFunctions == 1 ]]
+    then
+      return
+fi
+      rightDiagonalChecker
+if [[ $flagForSwitchFunctions == 1 ]]
+    then
+      return
+fi
 #corners
 	for ((i=0; i<$ROW; i++))
 	 do
@@ -329,8 +285,8 @@ function computerPlay() {
 }
 function playerPlay() {
 	read -p "Enter your position: " uPosition
-	newRI=$(($uPosition / 3))
-	newCI=$(($uPosition % 3))
+	newRI=$(($uPosition / $ROW))
+	newCI=$(($uPosition % $COLUMN))
 	Board[$newRI,$newCI]=$playerSign
 }
 function startGame() {
@@ -338,26 +294,30 @@ function startGame() {
 	if [[ $Turn == "Player" ]]; then
 		p=0
 		printf "$Turn will play first"
+		printf "\n"
  	 elif [[ $Turn == "Computer" ]]; then
 		p=1
 		printf "$Turn will play first"
+		printf "\n"
 	fi
 	while [[ $n -lt 9 ]]
 	 do
-		displayBoard
 		prevSign=$playerSign
 		if [[ $(($p % 2)) -eq 0 ]]; then
 			playerSign=$( assignLetter )
 			playerPlay
 		 else
+			flagForSwitchFunctions=0
 			playerSign=$( assignLetter )
 			computerPlay
 		fi
+		displayBoard
 		TicTacToeApp
 		((n++))
       ((p++))
 	 done
 }
 buildTheBoard
+displayBoard
 Turn=$( whoPlays )
 startGame
