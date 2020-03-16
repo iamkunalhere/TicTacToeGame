@@ -22,8 +22,7 @@ function displayBoard() {
 		echo
 		for (( columnIndex=0; columnIndex<COLUMN; columnIndex++))
 		 do
-			if [[ ${Board[$rowIndex,$columnIndex]} -ge $TWODIGITS ]]
-			 then
+			if [[ ${Board[$rowIndex,$columnIndex]} -ge $TWODIGITS ]]; then
 				printf "| ${Board[$rowIndex,$columnIndex]}  |"
 			 else
 			printf "|  ${Board[$rowIndex,$columnIndex]}  |"
@@ -45,8 +44,7 @@ function  buildTheBoard() {
 	 done
 }
 function assignLetter() {
-	if [[ $(($changeTurn%2)) -eq 0 ]]
-	 then
+	if [[ $(($changeTurn%2)) -eq 0 ]]; then
 		echo "X"
 	 else
 		echo "O"
@@ -54,8 +52,7 @@ function assignLetter() {
 }
 function whoPlays() {
 	state=$((RANDOM%2))
-   if [[ $state -eq 1 ]]
-    then
+   if [[ $state -eq 1 ]]; then
       echo "Player"
     else
       echo "Computer"
@@ -70,24 +67,19 @@ function TicTacToeApp() {
 	 do
 		for (( columnIndex=0; columnIndex<COLUMN; columnIndex++))
 		 do
-			if [[ ${Board[$rowIndex,$columnIndex]} == "$playerSign" ]]
-			 then
+			if [[ ${Board[$rowIndex,$columnIndex]} == "$playerSign" ]]; then
 				((rowCounter++))
 			fi
-			if [[ ${Board[$columnIndex,$rowIndex]} == "$playerSign" ]]
-			 then
+			if [[ ${Board[$columnIndex,$rowIndex]} == "$playerSign" ]]; then
 				((columnCounter++))
 			fi
-			if [[ $rowIndex == $columnIndex && ${Board[$rowIndex,$columnIndex]} == "$playerSign" ]]
-			 then
+			if [[ $rowIndex == $columnIndex && ${Board[$rowIndex,$columnIndex]} == "$playerSign" ]]; then
 				((leftDiCounter++))
 			fi
-			if [[ $columnIndex == $((ROW-rowIndex-1)) && ${Board[$rowIndex,$columnIndex]} == "$playerSign" ]]
-			 then
+			if [[ $columnIndex == $((ROW-rowIndex-1)) && ${Board[$rowIndex,$columnIndex]} == "$playerSign" ]]; then
 				((rightDiCounter++))
 			fi
-			if [[ $rowCounter == $COLUMN || $columnCounter == $COLUMN || $leftDiCounter == $COLUMN || $rightDiCounter == $COLUMN ]]
-			 then
+			if [[ $rowCounter == $COLUMN || $columnCounter == $COLUMN || $leftDiCounter == $COLUMN || $rightDiCounter == $COLUMN ]]; then
 					echo "$playerSign is Winner"
 					displayBoard
 					exit
@@ -112,12 +104,10 @@ function rowChecker() {
 	 do
 		for (( columnIndex=0; columnIndex<COLUMN; columnIndex++))
 		 do
-			if [[ ${Board[$rowIndex,$columnIndex]} == "$checkSign" ]]
-			 then
+			if [[ ${Board[$rowIndex,$columnIndex]} == "$checkSign" ]]; then
 				((rowCounter++))
 			fi
-			if [[ ${Board[$rowIndex,$columnIndex]} != "$checkSign" ]]
-			 then
+			if [[ ${Board[$rowIndex,$columnIndex]} != "$checkSign" ]]; then
 				putInRow=$rowIndex
 				putInColumn=$columnIndex
 			fi
@@ -139,12 +129,10 @@ function columnChecker() {
     do
       for (( columnIndex=0; columnIndex<COLUMN; columnIndex++))
        do
-         if [[ ${Board[$columnIndex,$rowIndex]} == "$checkSign" ]]
-          then
+         if [[ ${Board[$columnIndex,$rowIndex]} == "$checkSign" ]]; then
             ((columnCounter++))
          fi
-         if [[ ${Board[$columnIndex,$rowIndex]} != "$checkSign" ]]
-          then
+         if [[ ${Board[$columnIndex,$rowIndex]} != "$checkSign" ]]; then
             putInRow=$columnIndex
             putInColumn=$rowIndex
          fi
@@ -166,12 +154,10 @@ function leftDiagonalChecker() {
 	 do
 		for (( columnIndex=0; columnIndex<COLUMN; columnIndex++ ))
 		 do
-			if [[ $rowIndex == $columnIndex && ${Board[$rowIndex,$columnIndex]} == "$checkSign" ]]
-          then
+			if [[ $rowIndex == $columnIndex && ${Board[$rowIndex,$columnIndex]} == "$checkSign" ]]; then
             ((leftDiCounter++))
 			fi
-			if [[ $rowIndex == $columnIndex && ${Board[$rowIndex,$columnIndex]} != "$checkSign" ]]
-			 then
+			if [[ $rowIndex == $columnIndex && ${Board[$rowIndex,$columnIndex]} != "$checkSign" ]]; then
 				leftDiRow=$rowIndex
 				leftDiCol=$columnIndex
 			fi
@@ -192,12 +178,10 @@ function rightDiagonalChecker() {
     do
       for (( columnIndex=0; columnIndex<COLUMN; columnIndex++ ))
        do
-			if [[ $columnIndex == $((ROW-rowIndex-1)) && ${Board[$rowIndex,$columnIndex]} == "$checkSign" ]]
-	 		 then
+			if [[ $columnIndex == $((ROW-rowIndex-1)) && ${Board[$rowIndex,$columnIndex]} == "$checkSign" ]]; then
 				((rightDiCounter++))
 			fi
-			if [[ $columnIndex == $((ROW-rowIndex-1)) && ${Board[$rowIndex,$columnIndex]} != "$checkSign" ]]
-			 then
+			if [[ $columnIndex == $((ROW-rowIndex-1)) && ${Board[$rowIndex,$columnIndex]} != "$checkSign" ]]; then
 				rightDiRow=$rowIndex
 				rightDiCol=$columnIndex
 			fi
@@ -213,10 +197,9 @@ fi
 function cornerCheck() {
 	for (( number=0; number<$((ROW*ROW)); number++ ))
 	 do
-		if [[ $number == $((ROW-ROW)) || $number == $((ROW-1)) || $number == $((ROW*ROW-ROW)) || $number == $((ROW*ROW-1)) ]]
+		if [[ $number == $((ROW-ROW)) || $number == $((ROW-1)) || $number == $((ROW*ROW-ROW)) || $number == $((ROW*ROW-1)) ]];
 		 then
-			if [[ ${Board[$((number/ROW)),$((number%ROW))]} != "$prevSign" && ${Board[$((number/ROW)),$((number%ROW))]} != "$playerSign" ]]
-			 then
+			if [[ ${Board[$((number/ROW)),$((number%ROW))]} != "$prevSign" && ${Board[$((number/ROW)),$((number%ROW))]} != "$playerSign" ]]; then
 				Board[$((number/ROW)),$((number%ROW))]=$playerSign
 				flagForSwitchFunctions=1
 				return
@@ -226,8 +209,7 @@ function cornerCheck() {
 }
 function centerCheck() {
 	local center=$((ROW*ROW/2))
-	if [[ ${Board[$((center/ROW)),$((center%ROW))]} != "$prevSign" && ${Board[$((center/ROW)),$((center%ROW))]} != "$playerSign" ]]
-	 then
+	if [[ ${Board[$((center/ROW)),$((center%ROW))]} != "$prevSign" && ${Board[$((center/ROW)),$((center%ROW))]} != "$playerSign" ]]; then
 		Board[$((center/ROW)),$((center%ROW))]=$playerSign
 		flagForSwitchFunctions=1
 		return
@@ -249,69 +231,41 @@ function sidesCheck() {
 		 done
 	 done
 }
-function computerPlay() {
-#wining
-	checkSign=$playerSign
+function winOrBlockCheck() {
 		rowChecker
-	if [[ $flagForSwitchFunctions == 1 ]]
- 	 then
-		return
-	fi
-		columnChecker
-	if [[ $flagForSwitchFunctions == 1 ]]
- 	 then
-		return
-	fi
-		leftDiagonalChecker
-	if [[ $flagForSwitchFunctions == 1 ]]
-	 then
-		return
-	fi
-		rightDiagonalChecker
-	if [[ $flagForSwitchFunctions == 1 ]]
-	 then
-		return
-	fi
-#blocking
-	checkSign=$prevSign
-      rowChecker
-	if [[ $flagForSwitchFunctions == 1 ]]
-    then
+   if [[ $flagForSwitchFunctions == 1 ]]; then
       return
-	fi
+   fi
       columnChecker
-	if [[ $flagForSwitchFunctions == 1 ]]
-    then
+   if [[ $flagForSwitchFunctions == 1 ]]; then
       return
-	fi
+   fi
       leftDiagonalChecker
-	if [[ $flagForSwitchFunctions == 1 ]]
-    then
+   if [[ $flagForSwitchFunctions == 1 ]]; then
       return
-	fi
+   fi
       rightDiagonalChecker
-	if [[ $flagForSwitchFunctions == 1 ]]
-    then
+}
+function computerPlay() {
+	checkSign=$playerSign
+		winOrBlockCheck
+	if [[ $flagForSwitchFunctions == 1 ]]; then
+		return
+	fi
+	checkSign=$prevSign
+		winOrBlockCheck
+	if [[ $flagForSwitchFunctions == 1 ]]; then
       return
 	fi
-#corners
 		cornerCheck
-	if [[ $flagForSwitchFunctions == 1 ]]
-	 then
+	if [[ $flagForSwitchFunctions == 1 ]]; then
 		return
 	fi
-#center
-	centerCheck
-	if [[ $flagForSwitchFunctions == 1 ]]
-    then
+		centerCheck
+	if [[ $flagForSwitchFunctions == 1 ]]; then
 		return
 	fi
-#sides
-	sidesCheck
-	if [[ $flagForSwitchFunctions == 1 ]]
-    then
-		return
-	fi
+		sidesCheck
 }
 function playerPlay() {
 	local userPosition=0
